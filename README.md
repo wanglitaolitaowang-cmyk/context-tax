@@ -1,28 +1,51 @@
 # Context Tax
 
-**Find repeated context. Prove what you measured.**
+**Find repeated context and inspect logged usage.**
 
 [中文说明](README.zh-CN.md)
 
-A Codex-first, explicitly invoked, local context-audit skill with a deterministic Python CLI. Audit one selected JSONL transcript, inspect actual usage counters and repeated text evidence, then propose minimal task-local process changes. No network, telemetry, API keys, pip/npm dependencies or automatic configuration edits. Python 3.10+.
-
-This is not a new market: AviVAvi/TokenScope already provides a Claude Code profiler + skill. context-audit, ccusage and context-mode cover adjacent or overlapping needs. Context Tax is a small independently implemented, conservative adapter/workflow, not a claim of novelty, universal compatibility or proven savings. See [prior art and primary sources](skills/context-tax/references/sources.md).
+A local audit skill for selected Codex, Claude Code and OpenRouter JSONL logs, with a deterministic Python CLI. Inspect logged usage counters and repeated text, then use the manually invoked skill to review possible process improvements. The CLI runs offline with Python 3.10+ and the standard library. It requires no API keys or pip/npm dependencies.
 
 ## Quick start
 
-From the extracted repository root:
+### Get the source
+
+Clone the repository:
+
+```sh
+git clone https://github.com/wanglitaolitaowang-cmyk/context-tax.git
+cd context-tax
+```
+
+Alternatively, download and extract the source ZIP from GitHub. Run the commands below from the repository root, the directory containing `install.py`. An existing Python 3.10+ interpreter is required; the installer does not download Python. Windows users can substitute `py -3` for `python`.
+
+### Try the CLI without installing a skill
 
 ```sh
 python skills/context-tax/scripts/context_tax.py audit --source codex --log tests/fixtures/codex-synthetic.jsonl
-python -m unittest discover -s tests -v
+```
+
+This uses synthetic data. See the [example reports and expected values](examples/README.md).
+
+### Install the skill
+
+```sh
 python install.py --target codex --dry-run
 python install.py --target codex
 python install.py --target codex --check
 ```
 
-Windows users can substitute `py -3` for `python`. The interpreter must already exist; nothing is downloaded. The create-only installer refuses any existing destination. Codex default: `~/.agents/skills/context-tax`; Claude default with `--target claude`: `~/.claude/skills/context-tax`. `--dest` can set an exact alternative directory ending in `context-tax`; it does not register arbitrary paths with a host.
+The installer creates a new skill directory and refuses any existing destination. Codex default: `~/.agents/skills/context-tax`; for Claude Code, use `--target claude` with each command to install into `~/.claude/skills/context-tax`. `--dest` sets an exact alternative directory ending in `context-tax`; custom destinations must be in a location searched by your host.
 
 Explicitly invoke `$context-tax` in a supporting Codex surface / choose it from the host's skill picker, or `/context-tax` in Claude Code. Restart if not discovered. Host loading is a separate manual check, not proved by installation byte checks. Manual-only metadata is included for both hosts. No hooks or persistent configuration are changed. A skill's instructions are not a sandbox for the hosting agent.
+
+### Run the tests
+
+```sh
+python -m unittest discover -s tests -v
+```
+
+Tests use synthetic records and temporary installation directories. See [validation results and coverage](TESTING.md).
 
 ## Real audit
 
@@ -55,7 +78,7 @@ A descriptive reduction fraction requires both reports to share a user-defined `
 
 Known Codex rollout, Claude transcript and OpenRouter chat-completion JSONL shapes only; see [adapters](skills/context-tax/references/adapters.md). No automatic subagent aggregation, remote logs, arbitrary CSV, SSE or every future host version. Raw OpenRouter responses often lack payload/schema evidence; unavailable is not zero.
 
-71 tests passed on Linux / Python 3.13.5, including CLI and temporary-directory installer tests. Three synthetic adapter demos were also executed. **No Windows, real-user-log or Codex Desktop E2E has been executed for this delivery. No actual savings demonstrated.** See [TESTING.md](TESTING.md) and [synthetic examples](examples/README.md).
+Synthetic tests and CLI runs have been verified on Linux / Python 3.13.5 and Windows / Python 3.12.14. [TESTING.md](TESTING.md) records results, skipped tests and coverage. Real-user logs and host skill discovery in Codex Desktop/CLI and Claude Code remain unverified. No actual savings have been demonstrated.
 
 Reports omit original prose, arguments and absolute paths; arbitrary tool/model/provider/case names become stable aliases. These are pseudonyms, not guaranteed anonymization. Review reports before public sharing. The CLI is read-only for inputs, not a filesystem security sandbox. Installation can leave a new partial directory after interruption; inspect rather than force-overwriting.
 
@@ -71,4 +94,10 @@ tests/                               synthetic unit + CLI + installer tests
 examples/                            fictitious rates and generated reports
 ```
 
-MIT licensed. Source delivery only: no account connection, public repository publication or installation on the user's machine was performed.
+## Related projects and references
+
+TokenScope, context-audit, ccusage and context-mode address related usage profiling or context-management tasks. See [related projects and primary format references](skills/context-tax/references/sources.md).
+
+## License
+
+Licensed under the [MIT License](LICENSE).

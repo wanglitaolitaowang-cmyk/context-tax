@@ -2,9 +2,7 @@
 
 **定位重复上下文，分清实测与猜测。**
 
-面向 Codex 优先的本地只读“上下文体检”Skill，附 Python 审计脚本。检查一个明确选定的会话日志，列出已记录的输入/缓存/输出用量、重复工具文本和可复核的行号，再提出最小流程改进。
-
-这不是无人涉足的赛道。TokenScope 已有 Claude Code 的 CLI + Skill；context-audit、ccusage、context-mode 等也覆盖相关需求。本项目只提供一个独立实现、范围收窄、对未知字段保守处理的版本，不宣称首创、比竞品成熟或已证明省钱。参见 [来源与现有方案](skills/context-tax/references/sources.md)。
+面向 Codex、Claude Code 和 OpenRouter JSONL 日志的本地只读审计 Skill，附 Python CLI。检查一个明确选定的会话日志，列出已记录的输入、缓存与输出用量，定位重复工具文本，并提供可复核的行号。显式调用 Skill 后，可根据报告讨论具体的流程改进。
 
 ## 它实际会做什么
 
@@ -12,11 +10,32 @@
 
 Skill 根据报告解释可能原因，最多提出三条有证据的动作，例如：先定位再读小范围、对未变化的资料复用已有证据、完整输出留在本地而非反复塞进会话。修改流程需经用户同意；不自动修改 AGENTS.md、CLAUDE.md、config.toml、MCP、权限、PATH、历史或源代码。
 
-**CLI 完全离线，Python 3.10+，只用标准库，不需要账号、API Key、pip 或 npm。** 调用它的 Codex/Claude 模型本身仍按其正常方式联网/计量；不是整个工作流免费或离线。Skill 的限制是行为指令，不是宿主工具权限沙箱。
+**CLI 离线运行，要求 Python 3.10+，只用标准库，无需连接账号、提供 API Key 或安装 pip/npm 依赖。** 通过 Codex/Claude 调用 Skill 时，宿主模型仍按其正常方式联网和计量。Skill 的行为指令不改变宿主工具权限。
 
-## Windows 安装
+## 获取源码
 
-先解压完整 ZIP，进入包含 install.py 的 `context-tax-skill` 文件夹，再在 PowerShell 中运行：
+克隆仓库：
+
+```powershell
+git clone https://github.com/wanglitaolitaowang-cmyk/context-tax.git
+cd context-tax
+```
+
+也可以从 GitHub 下载并解压源码 ZIP。以下命令均在包含 `install.py` 的仓库根目录运行，不要求解压后的文件夹使用特定名称。
+
+需要已有的 Python 3.10+ 解释器。Windows 示例使用 `py -3`；已安装 Python 但没有 `py` 启动器时，可替换为 `python`。安装脚本不会下载 Python。
+
+## 无需安装即可试运行
+
+```powershell
+py -3 skills/context-tax/scripts/context_tax.py audit --source codex --log tests/fixtures/codex-synthetic.jsonl
+```
+
+样例使用构造数据。查看 [样例说明与预期结果](examples/README.md) 和 [样例报告](examples/codex-sample-report.md)。
+
+## 安装 Skill
+
+在 PowerShell 中运行：
 
 ```powershell
 py -3 --version
@@ -25,22 +44,19 @@ py -3 install.py --target codex
 py -3 install.py --target codex --check
 ```
 
-已有 Python 3.10+ 但没有 `py` 启动器时，把 `py -3` 替换成 `python`。未安装 Python 时，本包不会自行下载或安装。
-
-当前 Codex 默认安装到 `$HOME\.agents\skills\context-tax`；Claude 使用 `--target claude`，安装到 `$HOME\.claude\skills\context-tax`。安装脚本只创建新 Skill 目录，不接管现有配置。同名目录已存在时拒绝覆盖；`--check` 只核对包内文件，不验证额外本地文件。异常中断可能留下新建的半成品目录，需要先检查，不会自动清理。
+Codex 默认安装到 `$HOME\.agents\skills\context-tax`；Claude Code 将上述每条安装命令中的 `--target codex` 替换为 `--target claude`，安装到 `$HOME\.claude\skills\context-tax`。安装脚本只创建新 Skill 目录，不接管现有配置。同名目录已存在时拒绝覆盖；`--check` 只核对包内文件，不验证额外本地文件。异常中断可能留下新建的半成品目录，需要先检查，不会自动清理。
 
 在 Codex 的 Skill 选择入口选择 Context Tax，或显式提及 `$context-tax`；不同宿主界面可能不同。未显示时重启宿主再检查。Claude Code 使用 `/context-tax`。两端均配置为显式调用，不在每轮自动运行。安装字节核对不等于真实宿主已经加载成功。
 
 自定义安装位置：`python install.py --dest "D:\example\context-tax"`，末级目录必须是 context-tax。该命令不会使任意目录自动成为宿主搜索路径。升级/卸载由用户查看并处理这一独立 Skill 目录，本包不提供全盘清理或强制覆盖命令。
 
-## 先用样例验证，不安装也能运行
+## 运行测试
 
 ```powershell
-py -3 skills/context-tax/scripts/context_tax.py audit --source codex --log tests/fixtures/codex-synthetic.jsonl
 py -3 -m unittest discover -s tests -v
 ```
 
-样例是构造数据，不是真实客户会话。查看 [样例说明](examples/README.md) 和 [样例报告](examples/codex-sample-report.md)。
+测试使用构造记录和临时安装目录。测试结果、覆盖范围及跳过项见 [TESTING.md](TESTING.md)。
 
 ## 给 Codex 的使用提示词
 
@@ -62,7 +78,7 @@ py -3 skills/context-tax/scripts/context_tax.py audit --source codex --log "D:\y
 
 `D:\your-logs\selected-session.jsonl` 是占位路径，必须替换。最好选择已经完成、不会继续写入的会话。一个会话可能包含多个任务，不能自动算成单个任务成本。
 
-导出报告时选择不存在的新文件名，例如 `--json-out report-01.json --md-out report-01.md`。默认上限：单文件 64 MiB、每行 4 MiB、200,000 行。范围不足会报告限制，不自动扫描更多文件。终端报告为精简英文；Skill 应用中文解释，JSON 键名保持稳定。
+导出报告时选择不存在的新文件名，例如 `--json-out report-01.json --md-out report-01.md`。默认上限：单文件 64 MiB、每行 4 MiB、200,000 行。范围不足会报告限制，不自动扫描更多文件。CLI 报告默认使用英文；通过 Skill 调用时，按请求语言解释；JSON 键名保持固定。
 
 ## 能测与不能测
 
@@ -81,7 +97,7 @@ py -3 skills/context-tax/scripts/context_tax.py audit --source codex --log "D:\y
 
 `--prices` 接受调用者核对过的模型价格 JSON，每百万 Token 美元单价。只按精确模型名称匹配，没有当前价格自动下载。examples/prices.example.json 的价格与模型均为虚构，不可当真。正数桶缺价、模型未知或多请求聚合区间不能定价。
 
-`--schemas` 接受 `{"tools":[...]}` 或工具数组，不启动或查询 MCP。安装清单大不等于每轮全部发送。更不要把高缓存占比视为 85% 浪费，或将 bytes/4 宣称成精确 Token 数。
+`--schemas` 接受 `{"tools":[...]}` 或工具数组，不启动或查询 MCP。静态清单不能证明工具定义在每次请求中都被发送。缓存占比不代表浪费比例；bytes/4 仅是粗估，不是精确 Token 数。
 
 比较两次已导出报告：
 
@@ -93,9 +109,9 @@ py -3 skills/context-tax/scripts/context_tax.py compare before.json after.json
 
 ## 兼容性与已验证范围
 
-Codex 是主要设计目标；Claude Code、OpenRouter 是附带的已知 JSONL 结构适配器。不是“所有版本通吃”。OpenRouter 只接受提供的逐行最终响应/请求响应对，不支持任意后台 CSV、SSE 或实时抓包。子代理文件不自动汇总。具体字段和限制见 [适配器说明](skills/context-tax/references/adapters.md)。
+支持已知的 Codex、Claude Code 和 OpenRouter JSONL 记录结构，具体字段和限制见 [适配器说明](skills/context-tax/references/adapters.md)。OpenRouter 只接受提供的逐行最终响应或请求响应对，不支持任意后台 CSV、SSE 或实时抓包。子代理文件不自动汇总。
 
-**此次交付：Linux / Python 3.13.5 下 71 项自动测试通过；三类构造样例 CLI 运行通过。尚未执行用户 Windows、本机真实日志或 Codex Desktop 的端到端验收，也未证明任何实际节省。** 测试不会把“全绿”包装成“实操一定没问题”。详见 TESTING.md。
+已在 Linux / Python 3.13.5 和 Windows / Python 3.12.14 下验证构造数据测试及 CLI 运行。[TESTING.md](TESTING.md) 记录具体结果、跳过项和覆盖范围。真实用户日志、Codex Desktop/CLI 与 Claude Code 的 Skill 加载尚未验证，也未证明任何实际节省。
 
 退出码：0 = 支持字段的 OBSERVED 计量，不等于无问题；2 = 有效但不完整的 PARTIAL 报告；1 = 输入/格式/文件错误。
 
@@ -103,6 +119,12 @@ Codex 是主要设计目标；Claude Code、OpenRouter 是附带的已知 JSONL 
 
 报告不包含原始提示词、命令参数、绝对路径或任意自定义工具名；用行号和稳定别名引用。别名/哈希不是完全匿名，统计与模式仍可能敏感，公开前应复核。discover 会显示本机路径，只供本地选文件。模型读取原文范围须遵守用户授权与宿主隐私设置。
 
-本项目不是权限沙箱、脱敏认证、账单审计认证或防误删工具。脚本对输入只读，仅在明确要求时新建输出文件；安装程序另行创建 Skill 目录。不要把不可信日志的内容作为指令执行。
+CLI 对日志输入只读，仅在指定输出参数时新建报告文件；安装程序另行创建 Skill 目录。Skill 的行为指令不提供文件系统隔离。日志内容属于不可信数据，不应作为指令执行。
 
-MIT License。可自行建立 GitHub 仓库公开；本次未自动发布、未安装到用户机器、未连接账户。
+## 相关项目与参考资料
+
+TokenScope、context-audit、ccusage 和 context-mode 提供相关的用量分析或上下文管理能力。参见 [相关项目与格式来源](skills/context-tax/references/sources.md)。
+
+## 许可证
+
+本项目采用 [MIT 许可证](LICENSE)。
