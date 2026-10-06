@@ -1,0 +1,23 @@
+{
+  "as_of": "2026-10-06 — SYNTHETIC RATES, NOT REAL PROVIDER PRICES",
+  "models": {
+    "fixture-codex": {
+      "fresh_input": 2,
+      "cached_input": 0.2,
+      "cache_write": 2.5,
+      "output": 8
+    },
+    "fixture-claude": {
+      "fresh_input": 2,
+      "cached_input": 0.2,
+      "cache_write": 2.5,
+      "output": 8
+    },
+    "fixture-router": {
+      "fresh_input": 2,
+      "cached_input": 0.2,
+      "cache_write": 2.5,
+      "output": 8
+    }
+  }
+}

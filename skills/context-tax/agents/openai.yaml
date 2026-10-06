@@ -1,0 +1,6 @@
+interface:
+  display_name: "Context Tax"
+  short_description: "Read-only audit of agent context and repeated tool output"
+  default_prompt: "Use $context-tax to audit one selected local agent log and propose evidence-backed context hygiene changes."
+policy:
+  allow_implicit_invocation: false

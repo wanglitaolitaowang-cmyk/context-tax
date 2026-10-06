@@ -1,0 +1,110 @@
+{
+  "schema": "context-tax/v1",
+  "version": "0.1.0",
+  "source": "openrouter",
+  "source_label": "L1",
+  "status": "OBSERVED",
+  "privacy": "No transcript prose, arguments, absolute paths or custom tool names are included. Stable aliases/hashes are pseudonyms, not guaranteed anonymization. Review before sharing.",
+  "scope": {
+    "lines_scanned": 2,
+    "recognized_records": 2,
+    "other_records": 0,
+    "one_file_only": true,
+    "no_subagent_auto_discovery": true
+  },
+  "accounting": {
+    "totals_observed": {
+      "input_tokens": 2000,
+      "fresh_input_tokens": 400,
+      "cached_input_tokens": 1600,
+      "cache_write_tokens": 0,
+      "output_tokens": 200
+    },
+    "coverage_records": {
+      "input_tokens": 2,
+      "fresh_input_tokens": 2,
+      "cached_input_tokens": 2,
+      "cache_write_tokens": 2,
+      "output_tokens": 2
+    },
+    "usage_records": 2,
+    "request_records": 2,
+    "interval_records": 0,
+    "duplicate_usage_snapshots_excluded": 0,
+    "cache_token_share_on_known_records": 0.8,
+    "cache_share_records": 2,
+    "cache_share_input_denominator": 2000,
+    "cache_hit_request_rate_on_known_records": 1.0,
+    "cache_hit_request_denominator": 2,
+    "max_observed_request_input_tokens": 1000,
+    "complete_for_selected_file": true
+  },
+  "payloads": {
+    "tool_result_text_bytes": 0,
+    "repeated_tool_payload_extra_bytes": 0,
+    "tool_payload_repeat_byte_ratio": null,
+    "tool_result_records": 0,
+    "top_tools_by_observed_text_bytes": [],
+    "definition": "Text payloads observed in this transcript, excluding recognized runner envelopes; not provider tokens, wire replay or proven waste."
+  },
+  "schema_inventory": [],
+  "compaction_markers": {
+    "count": 0,
+    "refs": []
+  },
+  "cost": {
+    "reported_openrouter_credits_known_sum": 0.002,
+    "reported_cost_records": 2,
+    "reported_cost_complete_for_observed_usage": true,
+    "api_equivalent_estimate_usd": null,
+    "price_table_fingerprint": null,
+    "estimate_complete_for_observed_usage": false,
+    "cost_per_successful_task": null,
+    "billing_note": "No subscription charge/remaining quota is inferred. API-equivalent estimates exclude non-token fees and are not invoices. OpenRouter credits remain separately denominated."
+  },
+  "task": {
+    "case_alias": null,
+    "outcome": "unknown",
+    "acceptance_evidence_sha256": null,
+    "note": "Outcome and task equivalence are user-supplied; a hashed evidence file does not prove correctness."
+  },
+  "unavailable": {
+    "tool_schema_tokens_exact": "No provider per-schema token attribution. Inventory bytes/4 is a rough heuristic only.",
+    "context_replay_ratio_tokens": "Transcripts do not provide complete tokenized request bodies; cache share is not replay ratio.",
+    "compression_saving": "No controlled intervention and quality-preserving repeated trials are established.",
+    "avoidable_cost": "Repetition can be necessary; no counterfactual billing is observed."
+  },
+  "request_snapshot_evidence": {
+    "snapshots": 2,
+    "message_reuse_byte_ratio": 0.469187675070028,
+    "definition": "Exact canonical-JSON message byte overlap with the previous supplied request; includes first request in denominator. Not tokens or waste. Valid only for one chronological conversation."
+  },
+  "findings": [],
+  "warnings": {},
+  "usage_evidence": [
+    {
+      "input_tokens": 1000,
+      "fresh_input_tokens": 200,
+      "cached_input_tokens": 800,
+      "cache_write_tokens": 0,
+      "output_tokens": 100,
+      "ref": "L1:1",
+      "model_alias": "model-a54c0bb5923c",
+      "provider_alias": "provider-6f8c242800ba",
+      "granularity": "request",
+      "reported_openrouter_credits": 0.001
+    },
+    {
+      "input_tokens": 1000,
+      "fresh_input_tokens": 200,
+      "cached_input_tokens": 800,
+      "cache_write_tokens": 0,
+      "output_tokens": 100,
+      "ref": "L1:2",
+      "model_alias": "model-a54c0bb5923c",
+      "provider_alias": "provider-6f8c242800ba",
+      "granularity": "request",
+      "reported_openrouter_credits": 0.001
+    }
+  ]
+}

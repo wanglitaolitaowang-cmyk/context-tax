@@ -1,0 +1,15 @@
+{
+  "schema": "context-tax-comparison/v1",
+  "comparable_under_user_declared_conditions": false,
+  "blocking_reasons": [
+    "task_case_missing_or_different",
+    "both_runs_need_user_declared_pass_and_evidence"
+  ],
+  "before_input_tokens": 78000,
+  "after_input_tokens": 78000,
+  "observed_input_delta_after_minus_before": 0,
+  "observed_input_reduction_fraction": null,
+  "observed_api_equivalent_cost_reduction_usd": null,
+  "compression_saving": null,
+  "note": "A single before/after pair is descriptive, not causal proof or a future savings guarantee. Task/environment/acceptance equivalence and success are user-declared, not verified by this tool. Include audit overhead in any end-to-end claim."
+}

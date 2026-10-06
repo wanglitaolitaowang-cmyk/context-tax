@@ -1,0 +1,229 @@
+{
+  "schema": "context-tax/v1",
+  "version": "0.1.0",
+  "source": "codex",
+  "source_label": "L1",
+  "status": "OBSERVED",
+  "privacy": "No transcript prose, arguments, absolute paths or custom tool names are included. Stable aliases/hashes are pseudonyms, not guaranteed anonymization. Review before sharing.",
+  "scope": {
+    "lines_scanned": 19,
+    "recognized_records": 19,
+    "other_records": 0,
+    "one_file_only": true,
+    "no_subagent_auto_discovery": true
+  },
+  "accounting": {
+    "totals_observed": {
+      "input_tokens": 78000,
+      "fresh_input_tokens": 18000,
+      "cached_input_tokens": 60000,
+      "cache_write_tokens": 0,
+      "output_tokens": 600
+    },
+    "coverage_records": {
+      "input_tokens": 6,
+      "fresh_input_tokens": 6,
+      "cached_input_tokens": 6,
+      "cache_write_tokens": 6,
+      "output_tokens": 6
+    },
+    "usage_records": 6,
+    "request_records": 6,
+    "interval_records": 0,
+    "duplicate_usage_snapshots_excluded": 1,
+    "cache_token_share_on_known_records": 0.7692307692307693,
+    "cache_share_records": 6,
+    "cache_share_input_denominator": 78000,
+    "cache_hit_request_rate_on_known_records": 0.8333333333333334,
+    "cache_hit_request_denominator": 6,
+    "max_observed_request_input_tokens": 18000,
+    "complete_for_selected_file": true
+  },
+  "payloads": {
+    "tool_result_text_bytes": 39000,
+    "repeated_tool_payload_extra_bytes": 12000,
+    "tool_payload_repeat_byte_ratio": 0.3076923076923077,
+    "tool_result_records": 4,
+    "top_tools_by_observed_text_bytes": [
+      {
+        "tool": "exec_command",
+        "text_bytes": 21000,
+        "result_records": 1
+      },
+      {
+        "tool": "read_file",
+        "text_bytes": 18000,
+        "result_records": 3
+      }
+    ],
+    "definition": "Text payloads observed in this transcript, excluding recognized runner envelopes; not provider tokens, wire replay or proven waste."
+  },
+  "schema_inventory": [
+    {
+      "schema_alias": "schema-fb0ba16bf33a",
+      "tool": "tool-097efc11bd88",
+      "serialized_bytes": 20166,
+      "rough_tokens_bytes_div_4": 5042,
+      "occurrences": 1,
+      "refs": [
+        "S1/tools-1"
+      ]
+    }
+  ],
+  "compaction_markers": {
+    "count": 0,
+    "refs": []
+  },
+  "cost": {
+    "reported_openrouter_credits_known_sum": null,
+    "reported_cost_records": 0,
+    "reported_cost_complete_for_observed_usage": false,
+    "api_equivalent_estimate_usd": 0.0528,
+    "price_table_fingerprint": "rates-8c24f3036d89",
+    "estimate_complete_for_observed_usage": true,
+    "cost_per_successful_task": null,
+    "billing_note": "No subscription charge/remaining quota is inferred. API-equivalent estimates exclude non-token fees and are not invoices. OpenRouter credits remain separately denominated."
+  },
+  "task": {
+    "case_alias": null,
+    "outcome": "unknown",
+    "acceptance_evidence_sha256": null,
+    "note": "Outcome and task equivalence are user-supplied; a hashed evidence file does not prove correctness."
+  },
+  "unavailable": {
+    "tool_schema_tokens_exact": "No provider per-schema token attribution. Inventory bytes/4 is a rough heuristic only.",
+    "context_replay_ratio_tokens": "Transcripts do not provide complete tokenized request bodies; cache share is not replay ratio.",
+    "compression_saving": "No controlled intervention and quality-preserving repeated trials are established.",
+    "avoidable_cost": "Repetition can be necessary; no counterfactual billing is observed."
+  },
+  "request_snapshot_evidence": {
+    "snapshots": 0,
+    "message_reuse_byte_ratio": null,
+    "definition": "Exact canonical-JSON message byte overlap with the previous supplied request; includes first request in denominator. Not tokens or waste. Valid only for one chronological conversation."
+  },
+  "findings": [
+    {
+      "rule": "CT002",
+      "kind": "review",
+      "evidence": "observed_text_bytes",
+      "text_bytes": 21000,
+      "refs": [
+        "L1:18"
+      ],
+      "tool": "exec_command",
+      "action": "Prefer targeted queries or bounded lines; retain full evidence locally. Do not truncate failures or replace verification with a reassuring summary."
+    },
+    {
+      "rule": "CT005",
+      "kind": "review",
+      "evidence": "static_serialized_schema_bytes",
+      "text_bytes": 20166,
+      "refs": [
+        "S1/tools-1"
+      ],
+      "tool": "tool-097efc11bd88",
+      "action": "Review schema verbosity and host tool-search/lazy-loading support. An inventory is not proof this schema was sent or billed."
+    },
+    {
+      "rule": "CT001",
+      "kind": "review",
+      "evidence": "observed_text_equality",
+      "extra_observed_bytes": 12000,
+      "distinct_calls": 3,
+      "refs": [
+        "L1:5",
+        "L1:10",
+        "L1:15"
+      ],
+      "tool": "read_file",
+      "action": "Review identical results. Reuse a prior read only when target, range and version are unchanged. Never skip required tests or freshness checks."
+    },
+    {
+      "rule": "CT003",
+      "kind": "review",
+      "evidence": "repeated_logged_instruction_paragraph",
+      "extra_observed_bytes": 816,
+      "occurrences": 2,
+      "refs": [
+        "L1:3/paragraph-1",
+        "L1:12/paragraph-1"
+      ],
+      "action": "Inspect restart/resume or instruction reinjection. Stored repetition is not proof of wire replay or waste. Preserve safety instructions."
+    }
+  ],
+  "warnings": {},
+  "usage_evidence": [
+    {
+      "input_tokens": 8000,
+      "fresh_input_tokens": 8000,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 0,
+      "output_tokens": 100,
+      "ref": "L1:6",
+      "model_alias": "model-ba1511b445d2",
+      "provider_alias": "provider-6f8c242800ba",
+      "granularity": "request",
+      "reported_openrouter_credits": null
+    },
+    {
+      "input_tokens": 10000,
+      "fresh_input_tokens": 2000,
+      "cached_input_tokens": 8000,
+      "cache_write_tokens": 0,
+      "output_tokens": 100,
+      "ref": "L1:7",
+      "model_alias": "model-ba1511b445d2",
+      "provider_alias": "provider-6f8c242800ba",
+      "granularity": "request",
+      "reported_openrouter_credits": null
+    },
+    {
+      "input_tokens": 12000,
+      "fresh_input_tokens": 2000,
+      "cached_input_tokens": 10000,
+      "cache_write_tokens": 0,
+      "output_tokens": 100,
+      "ref": "L1:11",
+      "model_alias": "model-ba1511b445d2",
+      "provider_alias": "provider-6f8c242800ba",
+      "granularity": "request",
+      "reported_openrouter_credits": null
+    },
+    {
+      "input_tokens": 14000,
+      "fresh_input_tokens": 2000,
+      "cached_input_tokens": 12000,
+      "cache_write_tokens": 0,
+      "output_tokens": 100,
+      "ref": "L1:13",
+      "model_alias": "model-ba1511b445d2",
+      "provider_alias": "provider-6f8c242800ba",
+      "granularity": "request",
+      "reported_openrouter_credits": null
+    },
+    {
+      "input_tokens": 16000,
+      "fresh_input_tokens": 2000,
+      "cached_input_tokens": 14000,
+      "cache_write_tokens": 0,
+      "output_tokens": 100,
+      "ref": "L1:16",
+      "model_alias": "model-ba1511b445d2",
+      "provider_alias": "provider-6f8c242800ba",
+      "granularity": "request",
+      "reported_openrouter_credits": null
+    },
+    {
+      "input_tokens": 18000,
+      "fresh_input_tokens": 2000,
+      "cached_input_tokens": 16000,
+      "cache_write_tokens": 0,
+      "output_tokens": 100,
+      "ref": "L1:19",
+      "model_alias": "model-ba1511b445d2",
+      "provider_alias": "provider-6f8c242800ba",
+      "granularity": "request",
+      "reported_openrouter_credits": null
+    }
+  ]
+}
